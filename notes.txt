@@ -9,3 +9,10 @@ https://medium.com/@michaelekpang/creating-a-ci-cd-pipeline-using-github-actions
 creating github releases and using jsdliver to releases
 https://docs.github.com/en/github/administering-a-repository/managing-releases-in-a-repository
 https://github.com/jsdelivr/jsdelivr
+
+understanding pipelin in heroku 
+https://devcenter.heroku.com/articles/multiple-environments#managing-staging-and-production-configurations
+
+https://devcenter.heroku.com/articles/pipelines#creating-pipelines
+
+https://gist.github.com/randallreedjr/aa89e069371d07371882eea2df15fb4d
