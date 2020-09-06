@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>React Microfrontends</title>
+  <link rel="icon" type="image/x-icon" href="images/box.png">
+  <meta name="importmap-type" content="systemjs-importmap" />
+
+  <!-- <script type="systemjs-importmap" src="https://storage.googleapis.com/react.microfrontends.app/importmap.json"></script> -->
+  <% if (PORT && isLocal)  { %>
+    <script type="systemjs-importmap" src="http://localhost:<%= PORT%>/import-map.json"></script>
+  <% }  else { %>
+    <script type="systemjs-importmap" src="https://my-app-pip-staging.herokuapp.com/import-map.json"></script>
+  <% } %>
+
+  <% if (isLocal) { %>
+  <!-- <script type="systemjs-importmap">
+      {
+        "imports": {
+            "zone.js": "https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.10.3/zone.min.js",
+            "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+            "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+            "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.5.3/lib/system/single-spa.min.js",
+            "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs.min.js",
+            "rxjs/operators": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs-operators.min.js",
+            "@dev-box/styleguide":"https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-styleguide/dist/8f14e206c9b9c812a0bd-styleguide.js",
+            "@dev-box/navbar": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar/dist/05adc23ed1762ea42d56-navbar.js",
+            "@openmrs/esm-module-config":"https://cdn.jsdelivr.net/gh/npm/@openmrs/esm-module-config",
+            "@dev-box/root-config": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-base/dist/7a7ecd8de26da7a71197-root-config.js"  
+        }
+    }
+    </script> -->
+  <!-- <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@meh-dev/root-config": "//localhost:9000/root-config.js"
+      }
+    }
+  </script> -->
+  <% } %>
+  <!-- https://cdn.jsdelivr.net/npm/@openmrs/esm-devtools-app/dist/esm-devtools-app.js -->
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/amd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/named-exports.min.js"></script>
+</head>
+
+<body>
+
+  <!-- <single-spa-router id="single-spa-layout"></single-spa-router> -->
+  <script>
+    System.import('@dev-box/root-config');
+    System.import('@dev-box/styleguide');
+  </script>
+  <import-map-overrides-full></import-map-overrides-full>
+  <!-- <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full> -->
+</body>
+
+</html>

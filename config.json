@@ -1,0 +1,10 @@
+{
+    "username":"mehmoo_d",
+    "password":"mehmoo_p",
+    "locations": {
+        "default": "import-map.json",
+        "prod":"import-map.json",
+        "stage":"import-map.stage.json"
+    },
+    "manifestFormat":"importmap"
+}

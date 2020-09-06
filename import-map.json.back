@@ -1,0 +1,22 @@
+{
+    "imports": {
+      "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+      "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+      "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.5.3/lib/system/single-spa.min.js",
+      "@react-mf/root-config": "https://react.microfrontends.app/root-config/8dab9a87ab6007797116503edecee9c19ec67e34/react-mf-root-config.js",
+      "@react-mf/navbar": "https://react.microfrontends.app/navbar/5d7adc4177df50ab55247684e0df778ea1c1ef90/react-mf-navbar.js",
+      "@react-mf/styleguide": "https://react.microfrontends.app/styleguide/3a84d0c572e1cc9c4b45945e6f6f30b34a883f0f/react-mf-styleguide.js",
+      "@react-mf/people": "https://react.microfrontends.app/people/fbe313dce0f074139c134ca26359973d4a08cb51/react-mf-people.js",
+      "@react-mf/api": "https://react.microfrontends.app/api/b5fb7dbbc144642a48d04311b058ee95194df861/react-mf-api.js",
+      "@react-mf/planets": "https://react.microfrontends.app/planets/d1dca395405fdde9b4f85a189268c58c9e6934a5/react-mf-planets.js",
+      "@react-mf/things": "https://react.microfrontends.app/things/7f209a1ed9ac9690835c57a3a8eb59c17114bb1d/react-mf-things.js",
+      "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs.min.js",
+      "rxjs/operators": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs-operators.min.js",
+      "@react-mf/api/": "https://react.microfrontends.app/api/b5fb7dbbc144642a48d04311b058ee95194df861/",
+      "@react-mf/people/": "https://react.microfrontends.app/people/fbe313dce0f074139c134ca26359973d4a08cb51/",
+      "@react-mf/navbar/": "https://react.microfrontends.app/navbar/5d7adc4177df50ab55247684e0df778ea1c1ef90/",
+      "@react-mf/planets/": "https://react.microfrontends.app/planets/d1dca395405fdde9b4f85a189268c58c9e6934a5/",
+      "@react-mf/styleguide/": "https://react.microfrontends.app/styleguide/3a84d0c572e1cc9c4b45945e6f6f30b34a883f0f/",
+      "@react-mf/root-config/": "https://react.microfrontends.app/root-config/8dab9a87ab6007797116503edecee9c19ec67e34/"
+    }
+  }
