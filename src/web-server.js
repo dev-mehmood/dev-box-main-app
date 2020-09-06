@@ -68,19 +68,23 @@ app.get('/', function (req, res, next) {
       URL = 'https://dev-box-spa-staging.herokuapp.com/import-map.stage.json'
       break
     case 'review':
-      if(process.env.HEROKU_APP_NAME){
+      if (process.env.HEROKU_APP_NAME) {
         URL = `https:/${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
       }
+      break;
     default:
       URL = 'http://localhost:5000/import-map.json';
       break
 
   }
-  if(process.env.HEROKU_APP_NAME){
+  if (process.env.HEROKU_APP_NAME) {
     URL = `https:/${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
   }
-  return res.render('index', { isLocal: process.env.IS_LOCAL === undefined ? false : true, URL, staging: process.env.MODE === 'staging' }); // production
-  
+  return res.render('index', {
+    isLocal: process.env.IS_LOCAL === undefined ? false : true, URL, staging: process.env.MODE === 'staging',
+    review: process.env.MODE === 'review'
+  }); // production
+
 });
 app.get("/import-map.json", handleGetManifest);
 app.use(auth);

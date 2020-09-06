@@ -22,7 +22,7 @@
   </script> -->
   <% } %>
 
-  <% if (isLocal || mode === 'review' || mode === 'staging' ) { %>
+  <% if (isLocal || staging || review) { %>
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"></script>
   <% } %>
 
@@ -38,7 +38,7 @@
     System.import('@dev-box/styleguide');
   </script>
 
-  <% if (isLocal || staging  ) { %>
+  <% if (isLocal || staging  || review ) { %>
   <import-map-overrides-full></import-map-overrides-full>
   <% } %>
 
