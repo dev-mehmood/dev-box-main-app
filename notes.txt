@@ -15,4 +15,18 @@ https://devcenter.heroku.com/articles/multiple-environments#managing-staging-and
 
 https://devcenter.heroku.com/articles/pipelines#creating-pipelines
 
+renaming heroku remotes
+
 https://gist.github.com/randallreedjr/aa89e069371d07371882eea2df15fb4d
+
+Add a remote for your Staging app and deploy
+Note that on Heroku, you must always use master as the destination branch on the remote. 
+If you want to deploy a different branch,
+you can use the syntax local_branch:destination_branch 
+seen below (in this example, we push the local staging branch to the master branch on heroku.
+
+$ git remote add staging https://git.heroku.com/staging-app.git
+$ git push staging staging:master
+In some cases, your local branch may be missing some commits that were already deployed to Heroku, resulting in an error. If you are very sure you want to proceed, add the --force (-f) flag.
+
+$ git push staging staging:master -f
