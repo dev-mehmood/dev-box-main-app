@@ -57,8 +57,10 @@ app.use(
 app.use(express.static(__dirname + "/public"));
 app.use(favicon(path.join(__dirname,'public','images','box.png')));
 app.get('/', function(req, res, next) {
-  // return res.render('index', { isLocal: false, PORT:process.env.PORT || null }); // production
-  return res.render('index', { isLocal: true, PORT:process.env.PORT || 5000 });
+  let jsonUrl = '';
+  
+  return res.render('index', { isLocal: false, PORT:process.env.PORT || null, jsonUrl }); // production
+  // return res.render('index', { isLocal: true, PORT:process.env.PORT || 5000 });
 });
 app.get("/import-map.json", handleGetManifest);
 app.use(auth);
