@@ -1,7 +1,9 @@
 
 # https://medium.com/@michaelekpang/creating-a-ci-cd-pipeline-using-github-actions-b65bb248edfe
 
+How to deploy a MERN stack app on Heroku
 https://medium.com/crowdbotics/deploy-a-mern-stack-app-on-heroku-b0c255744a70
+https://blog.echobind.com/setting-up-review-apps-on-heroku-e5582fa7cd37
 
 githbub ci/cd 
 https://medium.com/@michaelekpang/creating-a-ci-cd-pipeline-using-github-actions-b65bb248edfe
@@ -18,6 +20,8 @@ https://devcenter.heroku.com/articles/pipelines#creating-pipelines
 renaming heroku remotes
 
 https://gist.github.com/randallreedjr/aa89e069371d07371882eea2df15fb4d
+
+
 
 Add a remote for your Staging app and deploy
 Note that on Heroku, you must always use master as the destination branch on the remote. 

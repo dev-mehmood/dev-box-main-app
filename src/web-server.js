@@ -28,7 +28,7 @@ const express = require("express"),
   setConfig = require("./config.js").setConfig,
   { checkUrlUnsafe } = require("./trusted-urls");
 app.use(cors());
-  // view engine setup
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -55,12 +55,29 @@ app.use(
 );
 
 app.use(express.static(__dirname + "/public"));
-app.use(favicon(path.join(__dirname,'public','images','box.png')));
-app.get('/', function(req, res, next) {
-  let jsonUrl = '';
+app.use(favicon(path.join(__dirname, 'public', 'images', 'box.png')));
+app.get('/', function (req, res, next) {
+  //https://devcenter.heroku.com/articles/config-vars
+  let URL = '';
+  const mode = process.env.MODE || 'development';
+  switch (mode) {
+    case 'production':
+      URL = 'https://dev-box-spa-staging.herokuapp.com/import-map.json'
+      break;
+    case 'staging':
+      URL = 'https://dev-box-spa-staging.herokuapp.com/import-map.stage.json'
+      break
+    case 'review':
+      if(process.env.HEROKU_APP_NAME){
+        URL = `https:/${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
+      }
+    default:
+      URL = 'http://localhost:5000/import-map.json';
+      break
+
+  }
+  return res.render('index', { isLocal: process.env.IS_LOCAL === undefined ? false : true, URL, staging: process.env.MODE === 'staging' }); // production
   
-  return res.render('index', { isLocal: false, PORT:process.env.PORT || null, jsonUrl }); // production
-  // return res.render('index', { isLocal: true, PORT:process.env.PORT || 5000 });
 });
 app.get("/import-map.json", handleGetManifest);
 app.use(auth);

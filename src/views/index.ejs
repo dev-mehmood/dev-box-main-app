@@ -9,15 +9,10 @@
   <link rel="icon" type="image/x-icon" href="images/box.png">
   <meta name="importmap-type" content="systemjs-importmap" />
 
-  <!-- <script type="systemjs-importmap" src="https://storage.googleapis.com/react.microfrontends.app/importmap.json"></script> -->
-  <% if (PORT && isLocal)  { %>
-    <script type="systemjs-importmap" src="http://localhost:<%= PORT%>/import-map.json"></script>
-  <% }  else { %>
-    <script type="systemjs-importmap" src="https://dev-box-spa.herokuapp.com/import-map.json"></script>
-  <% } %>
 
+  <script type="systemjs-importmap" src="<%= URL %>"></script>
   <% if (isLocal) { %>
- 
+
   <!-- <script type="systemjs-importmap">
     {
       "imports": {
@@ -26,8 +21,11 @@
     }
   </script> -->
   <% } %>
-  <!-- https://cdn.jsdelivr.net/npm/@openmrs/esm-devtools-app/dist/esm-devtools-app.js -->
+
+  <% if (isLocal || staging ) { %>
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"></script>
+  <% } %>
+
   <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/amd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/named-exports.min.js"></script>
@@ -35,12 +33,15 @@
 
 <body>
 
-  <!-- <single-spa-router id="single-spa-layout"></single-spa-router> -->
   <script>
     System.import('@dev-box/root-config');
     System.import('@dev-box/styleguide');
   </script>
+
+  <% if (isLocal || staging  ) { %>
   <import-map-overrides-full></import-map-overrides-full>
+  <% } %>
+
   <!-- <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full> -->
 </body>
 
