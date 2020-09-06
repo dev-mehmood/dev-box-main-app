@@ -69,7 +69,7 @@ app.get('/', function (req, res, next) {
       break
     case 'review':
       if (process.env.HEROKU_APP_NAME) {
-        URL = `https:/${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
+        URL = `https://${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
       }
       break;
     default:
@@ -77,9 +77,7 @@ app.get('/', function (req, res, next) {
       break
 
   }
-  if (process.env.HEROKU_APP_NAME) {
-    URL = `https:/${process.env.HEROKU_APP_NAME}.herokuapp.com/import-map.stage.json`
-  }
+ 
   return res.render('index', {
     isLocal: process.env.IS_LOCAL === undefined ? false : true, URL, staging: process.env.MODE === 'staging',
     review: process.env.MODE === 'review'
