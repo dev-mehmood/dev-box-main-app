@@ -34,3 +34,6 @@ $ git push staging staging:master
 In some cases, your local branch may be missing some commits that were already deployed to Heroku, resulting in an error. If you are very sure you want to proceed, add the --force (-f) flag.
 
 $ git push staging staging:master -f
+
+
+ //"start": "PORT=5000 IS_LOCAL=true node src/web-server.js"
