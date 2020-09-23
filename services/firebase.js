@@ -5,6 +5,7 @@ const functions = require('');
 
 //https://firebase.google.com/docs/reference/admin/node
 const admin = require('firebase-admin');
+
 require('dotenv').config();
 admin.initializeApp({
   credential: admin.credential.cert({

@@ -22,8 +22,8 @@ const localStrategy = require('passport-local').Strategy;
 //       }
 //     }
 //   });
-  
-const UserModel = require('../model/model');
+
+const { model: UserModel, schema: UserSchema } = require('../model/user.model');
 
 //Create a passport middleware to handle user registration
 passport.use('signup', new localStrategy({
@@ -83,11 +83,10 @@ passport.use(new JWTstrategy({
     //secret we used to sign our JW
     secretOrKey: process.env.PASSPORT_SECRET,
     //we expect the user to send the token as a query parameter with the name 'secret_token'
-    jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+    // jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+    jwtFromRequest: ExtractJWT.fromHeader('x-access-token')
 }, async (token, done) => {
     try {
-        
-        
         //Pass the user details to the next middleware
         return done(null, token.user);
     } catch (error) {
@@ -96,11 +95,10 @@ passport.use(new JWTstrategy({
 }));
 
 /*
-Note : If you’ll need extra or sensitive details about the user that are not available in the token, you could use the _id available on the token to retrieve them from the database.
-
+* Note : If you’ll need extra or sensitive details about the user that are not available in the token, 
+* you could use the _id available on the token to retrieve them from the database.
 */
 
 // blacklisting jwt
-
 // https://auth0.com/blog/blacklist-json-web-token-api-keys/
 

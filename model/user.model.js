@@ -5,10 +5,13 @@ Now we don’t want to store passwords in plain text because if an attacker mana
 
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
+mongoose.Promise = global.Promise;
+require('dotenv').config();
 
+
+const {devboxdb: db }= require('../services/mongoose.connection');
 
 const Schema = mongoose.Schema;
-
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -50,14 +53,10 @@ UserSchema.methods.isValidPassword = async function (password) {
   const compare = await bcrypt.compare(password, user.password);
   return compare;
 }
+console.log('test')
+db.model('user', UserSchema);
 
-const UserModel = mongoose.model('user', UserSchema);
-const uri = process.env.MONGO_db_URI;
-mongoose.connect(uri,  { useNewUrlParser: true })
-mongoose.connection.on('error', error => console.log(error));
-mongoose.Promise = global.Promise;
-mongoose.connection.on("open", function(ref) {
-  console.log("Connected to mongo server.");
-  
-});
-module.exports = UserModel;
+module.exports = {
+  schema:UserSchema,
+  model:db.model('user')
+}

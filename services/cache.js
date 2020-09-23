@@ -6,7 +6,7 @@
  */
 
 var cache = {};
-
+require('dotenv').config();
 module.exports = {
     set: function (key, value) {
         cache[key] = value

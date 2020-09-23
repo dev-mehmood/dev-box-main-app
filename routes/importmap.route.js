@@ -4,11 +4,15 @@
     Now that we have middleware for handling registration and login, let’s create routes that’ll use this middleware.
  */
 const express = require('express');
-const router = express.Router();
 const fs = require('fs')
-const passport = require('passport')
+const passport = require('passport');
+
+const { encodeKey, decodeKey, decodeImports, encodeImports } = require('../services/helper')
+const { model: ImportMapModel } = require('../model/importmap.model')
 const cache = require('../services/cache');
-const { ImportMapModel, encodeKey, decodeKey, decodeImports, encodeImports } = require('../model/import-maps.model')
+const router = express.Router();
+
+
 function deleteTempFile(path) {
     try {
         fs.unlinkSync(path)
@@ -17,6 +21,7 @@ function deleteTempFile(path) {
         console.error(err)
     }
 }
+
 router.get('/import-map.json', async (req, res, next) => {
     // const cache = require('../services/cache')
     let query = req.query || {};
@@ -40,7 +45,7 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
     let body = req.body || {};
     if (!body) return res.status(400).send({ success: false, message: 'No data found' });
     if (!body.imports) return res.status(400).send({ success: false, message: 'data.imports is undefined' });
-   
+
     body.mode = body.mode || 'prod';
 
     const imports = {}
@@ -52,7 +57,7 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
         mode: body.mode,
         imports
     }
-    
+
     if (body.delete || body.deleteAll) {
         // delete all imports or some records
         data = cache.get(body.mode);
@@ -61,7 +66,7 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
             await ImportMapModel.findOneAndRemove({ mode: body.mode });
 
         } else {
-            
+
             for (const [key, value] of Object.entries(data.imports)) {
                 if (key in body.imports) {
                     delete data.imports[key];
@@ -83,7 +88,7 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
         if (!data_) {
 
             save(body, data);
-            
+
         } else {
 
             data.imports = { ...data_.doc.imports, ...data.imports };
