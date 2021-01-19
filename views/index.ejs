@@ -12,7 +12,7 @@
 
   <script type="systemjs-importmap" src="<%= URL %>"></script>
   <% if (isLocal) { %>
-
+    MODE=prodMODE=prod
   <!-- <script type="systemjs-importmap">
     {
       "imports": {
@@ -22,7 +22,7 @@
   </script> -->
   <% } %>
 
-  <% if (isLocal || staging || review) { %>
+  <% if (MODE  != 'prod') { %>
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides/dist/import-map-overrides.js"></script>
   <% } %>
 
@@ -38,7 +38,7 @@
     System.import('@dev-box/styleguide');
   </script>
 
-  <% if (isLocal || staging  || review ) { %>
+  <% if (MODE != 'prod') { %>
     <import-map-overrides-full></import-map-overrides-full>
   <% } %>
 

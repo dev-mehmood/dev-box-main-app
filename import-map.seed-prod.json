@@ -9,9 +9,9 @@
     "@dev-box/styleguide": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-styleguide@v1.0.0/dist/styleguide.js",
     "@dev-box/styleguide/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-styleguide@v1.0.0/dist/",
     "@dev-box/navbar": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar@v1.0.0/dist/navbar.js",
-    "@dev-box/navbar/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar@stage-v1.0.0/dist/",
-    "@dev-box/root-config": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@stage-v1.0.0/dist/root-config.js",
-    "@dev-box/root-config/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@stage-v1.0.0/dist/"
+    "@dev-box/navbar/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar@v1.0.0/dist/",
+    "@dev-box/root-config": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@v1.0.0/dist/root-config.js",
+    "@dev-box/root-config/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@v1.0.0/dist/"
   },
   "mode": "prod"
 }

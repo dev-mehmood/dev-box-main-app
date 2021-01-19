@@ -21,7 +21,7 @@
     console.log('test');
     const { seed } = require('./services/helper');
 
-    await seed(process.env.mode);// seed import-map.json on restart
+    await seed(process.env.MODE);// seed import-map.json on restart
     /**Import maps and mongoose connection */
     const app = express();
     app.use(cors());
@@ -36,33 +36,18 @@
     require('./auth/auth');
 
     app.get('/', function (req, res) {
-      //https://devcenter.heroku.com/articles/config-vars
-      let URL = 'https://dev-box-spa-staging.herokuapp.com/import-maps/import-map.json/?&timestamp=' + new Date().getTime();
-      const mode = process.env.MODE;
-
-      switch (mode) {
-        case 'prod':
-          URL = URL + '&mode=prod';
-          break;
-        case 'stage':
-          URL = URL + '&mode=stage';
-          break
-        case 'review':
-          if (process.env.HEROKU_APP_NAME) {
-            URL = `https://${process.env.HEROKU_APP_NAME}.herokuapp.com/import-maps/import-map.json/?mode=stage&timestamp=` + new Date().getTime();
-          }
-          break;
-        default:
-          URL = 'http://localhost:3000/import-maps/import-map.json/?&mode=stage&timestamp=' + new Date().getTime();
-          break
+      function getHost() {
+        if (process.env.IS_LOCAL) return 'http://localhost:3000'
+        return `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`
       }
+      //https://devcenter.heroku.com/articles/config-vars
+      let URL = `${getHost()}/import-maps/import-map.json/?timestamp=${new Date().getTime()}&mode=${process.env.MODE === 'prod'?'prod':'stage'}`;
+     
 
       return res.render('index', {
-        isLocal: process.env.IS_LOCAL === undefined ? false : true,
+        isLocal: !!process.env.IS_LOCAL === 'true' ,
         URL,
-        staging: process.env.MODE === 'stage',
-        review: process.env.MODE === 'review',
-        production: process.env.MODE === 'prod'
+        MODE: process.env.MODE 
 
       });
 
