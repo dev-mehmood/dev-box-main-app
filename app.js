@@ -60,9 +60,9 @@
       return res.render('index', {
         isLocal: process.env.IS_LOCAL === undefined ? false : true,
         URL,
-        staging: process.env.MODE === 'staging',
+        staging: process.env.MODE === 'stage',
         review: process.env.MODE === 'review',
-        production: process.env.MODE === 'production'
+        production: process.env.MODE === 'prod'
 
       });
 
@@ -73,7 +73,10 @@
     const routes = require('./routes/auth.route');
     const import_maps = require('./routes/importmap.route');
     const secureRoute = require('./routes/user.secure.route');
-
+    // app.post('/auth/signup',(req, res)=>{
+    //   console.log('test')
+    //   res.status(200).send({success:true})
+    // })
     app.use('/auth', routes);
     app.use('/import-maps', import_maps);
 
