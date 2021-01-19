@@ -11,21 +11,21 @@ const cache = require('./cache')
 module.exports = {
   decodeImports: (data) => {
     const imports = {}
-    let decoded = ''
+   
     for (const [key, value] of Object.entries(data.imports)) {
-      decoded = firebaseKey.decode(key)
-      imports[decoded] = value;
+      
+      imports[firebaseKey.decode(key)] = value;
     }
-    return imports;
+    return {mode: data.mode, imports}
   },
   encodeImports: (data) => {
     const imports = {}
-    let decoded = ''
+   
     for (const [key, value] of Object.entries(data.imports)) {
-      decoded = firebaseKey.encode(key)
-      imports[decoded] = value;
+     
+      imports[firebaseKey.encode(key)] = value;
     }
-    return imports;
+    return {mode: data.mode, imports}
   },
   decodeKey: (key) => {
     return firebaseKey.decode(key)
@@ -35,24 +35,23 @@ module.exports = {
   },
 
 
-  seed: async (mode = 'prod') => {
+  seed: async (mode) => {
     try {
 
       let data = await model.find({ mode }).exec();
       if (!data.length) {
         // create three seeds
-        const promiseArray = [];
-        const arr = ['prod', 'stage', 'review']
-        arr.forEach((mod => {
-          promiseArray.push(createSeed(mod))
-        }))
-        await Promise.all(promiseArray)
+       
+        
+        await createSeed(mode)
+        
         return true;
       } else {
         data.forEach(({ _doc }) => {
-          _doc.imports = module.exports.decodeImports(_doc)
-          cache.set(_doc.mode, _doc)
-          console.log(cache.get(_doc.mode))
+          // decode returns to normal
+          // save in cache
+          cache.set(_doc.mode, module.exports.decodeImports(_doc))
+          
         })
         return true;
       }
@@ -63,22 +62,22 @@ module.exports = {
 
     function createSeed(mode) {
       return new Promise((_re, _rj) => {
-        const imported = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'import-map.seed.json'), 'utf8'));
-        const imports = {}
-        let encoded = ''
+        const imported = JSON.parse(fs.readFileSync(path.join(__dirname, '..', `import-map.seed-${mode}.json`), 'utf8'));
+        const imports = {};
+        // set in in-memory cache
+        cache.set(mode, imported);
         for (const [key, value] of Object.entries(imported.imports)) {
-          encoded = firebaseKey.encode(key);
-          imports[encoded] = value;
+
+          imports[firebaseKey.encode(key)] = value;
         }
 
-        data = {
-          mode,
-          imports
-        }
+        data = {mode, imports }
+        // save importmaps in database
         const importMap = new model(data)
 
         importMap.save(function (err) {
           if (err) _rj(err);
+          cache.set()
           _re(true)
           // saved!
         });

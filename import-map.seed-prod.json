@@ -1,0 +1,17 @@
+{
+  "imports": {
+    "zone.js": "https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.10.3/zone.min.js",
+    "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+    "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+    "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.5.3/lib/system/single-spa.min.js",
+    "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs.min.js",
+    "rxjs/operators": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.5.5/system/rxjs-operators.min.js",
+    "@dev-box/styleguide": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-styleguide@v1.0.0/dist/styleguide.js",
+    "@dev-box/styleguide/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-styleguide@v1.0.0/dist/",
+    "@dev-box/navbar": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar@v1.0.0/dist/navbar.js",
+    "@dev-box/navbar/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-navbar@stage-v1.0.0/dist/",
+    "@dev-box/root-config": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@stage-v1.0.0/dist/root-config.js",
+    "@dev-box/root-config/": "https://cdn.jsdelivr.net/gh/dev-mehmood/dev-box-client@stage-v1.0.0/dist/"
+  },
+  "mode": "prod"
+}

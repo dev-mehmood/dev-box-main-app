@@ -22,7 +22,7 @@ function getDb(uri) {
 function connectionFectory(uri) {
 
     return new Promise((resolve, reject) => {
-        let name = uri.split('/').slice(-1).pop()
+        // let name = uri.split('/').slice(-1).pop()
         if (module.exports[map.get(uri)]) return resolve(module.exports[map.get(uri)]);
 
         let conn = mongoose.createConnection(uri, { useNewUrlParser: true })

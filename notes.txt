@@ -37,3 +37,10 @@ $ git push staging staging:master -f
 
 
  //"start": "PORT=5000 IS_LOCAL=true node src/web-server.js"
+
+https://developer.mongodb.com/how-to/use-atlas-on-heroku#std-label-configure-heroku-ip-address-in-atlas
+https://developer.mongodb.com/how-to/use-atlas-on-heroku
+
+
+ zP9R7igp8jT38llI
+ mongodb+srv://stage-dev-box-rest:zP9R7igp8jT38llI@cluster0.sneo0.mongodb.net/importmaps?retryWrites=true&w=majority

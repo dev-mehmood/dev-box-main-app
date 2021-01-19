@@ -25,19 +25,9 @@ function deleteTempFile(path) {
 router.get('/import-map.json', async (req, res, next) => {
     // const cache = require('../services/cache')
     let query = req.query || {};
-    if (!query.mode) query.mode = 'prod'
-
-    fs.writeFileSync('./import-map.json', JSON.stringify({ imports: cache.get([query.mode]).imports }), 'utf8')
-    const readStream = fs.createReadStream('./import-map.json');
-    readStream.on('open', function () {
-        // This just pipes the read stream to the response object (which goes to the client)
-        deleteTempFile('./import-map.json');
-        readStream.pipe(res);
-    })
-    readStream.on('error', function (err) {
-        deleteTempFile('./import-map.json');
-        res.end(err);
-    });
+    if (!query.mode) query.mode = 'stage'
+    res.status(200).send({ imports: cache.get([query.mode]).imports })
+   
 });
 
 router.patch('/import-map.json', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
@@ -46,17 +36,15 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
     if (!body) return res.status(400).send({ success: false, message: 'No data found' });
     if (!body.imports) return res.status(400).send({ success: false, message: 'data.imports is undefined' });
 
-    body.mode = body.mode || 'prod';
+    body.mode = body.mode || 'stage'
 
     const imports = {}
     for (const [key, value] of Object.entries(body.imports)) {
+        // encodekey converts to raw values accepted by firebase or mongoos for properites
         imports[encodeKey(key)] = value;
     }
 
-    let data = {
-        mode: body.mode,
-        imports
-    }
+    let data = { mode: body.mode,imports } // already endcoded and ready for db
 
     if (body.delete || body.deleteAll) {
         // delete all imports or some records
@@ -64,21 +52,18 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
         if (body.deleteAll) {
 
             await ImportMapModel.findOneAndRemove({ mode: body.mode });
+            cache.set(body.mode, null)
 
         } else {
 
             for (const [key, value] of Object.entries(data.imports)) {
-                if (key in body.imports) {
+                if (key in encodeImports(body).imports) {
                     delete data.imports[key];
                 }
             }
 
-            data.imports = encodeImports(data);
-            update(body, data)
-            // ImportMapModel.update({ mode: body.mode }, data, (err, raw) => {
-            //     cache.set(data.mode, { mode: data.mode, imports: decodeImports(data) });
-            //     res.status(200).json({ success: true })
-            // })
+            update(data)
+            
         }
 
     } else if (!cache.get(body.mode)) {
@@ -87,28 +72,22 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
 
         if (!data_) {
 
-            save(body, data);
+            save(data);
 
         } else {
 
             data.imports = { ...data_.doc.imports, ...data.imports };
-            update(body, data)
-            // ImportMapModel.update({ mode: body.mode }, data, (err, raw) => {
-            //     cache.set(data.mode, { mode: data.mode, imports: decodeImports(data) });
-            //     res.status(200).json({ success: true })
-            // })
+            update(data)
+            
         }
 
     } else {
 
         data.imports = { ...encodeImports(cache.get(body.mode)), ...data.imports };
-        update(body, data)
-        // ImportMapModel.update({ mode: body.mode }, data, (err, raw) => {
-        //     cache.set(data.mode, { mode: data.mode, imports: decodeImports(data) });
-        //     res.status(200).json({ success: true })
-        // })
+        update(data)
+       
     }
-    function save(body, data) {
+    function save( data) {
 
         const importMap = new ImportMapModel(data)
         importMap.save(function (err) {
@@ -117,9 +96,9 @@ router.patch('/import-map.json', passport.authenticate('jwt', { session: false }
             res.status(200).json({ success: true })
         });
     }
-    function update(body, data) {
+    function update(data) {
         ImportMapModel.update({ mode: body.mode }, data, (err, raw) => {
-            cache.set(data.mode, { mode: data.mode, imports: decodeImports(data) });
+            cache.set(data.mode, decodeImports(data));
             res.status(200).json({ success: true })
         })
     }

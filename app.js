@@ -8,8 +8,9 @@
     const path = require('path');
     const cors = require('cors');
     const favicon = require('serve-favicon');
- 
-   
+
+
+    /**Import maps and mongoose connection */
     const cache = require('./services/cache');
     require('dotenv').config();
 
@@ -18,15 +19,16 @@
     await connect(process.env.MONGO_db_URI, 'devBoxDB');
     await connect(process.env.IMPORT_MAPS_DB_URI, 'importMapDB')
     console.log('test');
-    const {  seed } = require('./services/helper');
-    
-    await seed();// seed import-map.json on restart
-    
+    const { seed } = require('./services/helper');
+
+    await seed(process.env.mode);// seed import-map.json on restart
+    /**Import maps and mongoose connection */
     const app = express();
     app.use(cors());
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'ejs');
+
     app.use(express.static(__dirname + "/public"));
     app.use(favicon(path.join(__dirname, 'public', 'images', 'box.png')));
 
@@ -39,10 +41,10 @@
       const mode = process.env.MODE;
 
       switch (mode) {
-        case 'production':
+        case 'prod':
           URL = URL + '&mode=prod';
           break;
-        case 'staging':
+        case 'stage':
           URL = URL + '&mode=stage';
           break
         case 'review':
@@ -51,7 +53,7 @@
           }
           break;
         default:
-          URL = 'http://localhost:3000/import-maps/import-map.json/?&mode=prod&timestamp=' + new Date().getTime();
+          URL = 'http://localhost:3000/import-maps/import-map.json/?&mode=stage&timestamp=' + new Date().getTime();
           break
       }
 
@@ -59,7 +61,8 @@
         isLocal: process.env.IS_LOCAL === undefined ? false : true,
         URL,
         staging: process.env.MODE === 'staging',
-        review: process.env.MODE === 'review'
+        review: process.env.MODE === 'review',
+        production: process.env.MODE === 'production'
 
       });
 

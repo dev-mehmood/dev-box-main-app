@@ -41,7 +41,7 @@ router.post('/login', async (req, res, next) => {
         const body = { _id: user._id, email: user.email };
         //Sign the JWT token and populate the payload with the user email and id
         const token = jwt.sign({
-          exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365),
+          exp: Math.floor(Date.now() / 1000) + ( 60 * 60 * 24 * 365),
           user: body }, process.env.PASSPORT_SECRET);
         //Send back the token to the user
         // optionally we can set token in the cookie
